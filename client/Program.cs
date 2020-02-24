@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient.Proto;
 
 namespace GrpcClient
 {
-    class Program
+    static class Program
     {
         static async Task Main(string[] args)
         {
@@ -25,10 +27,15 @@ namespace GrpcClient
                 HttpClient = httpClient,
             });
 
-            var client = new Greeter.GreeterClient(channel);
-            var reply = await client.SayHelloAsync(new HelloRequest {Name = "not me"});
+            var metadata = new Metadata
+            {
+                {"X-User-bin", Encoding.UTF8.GetBytes("äöüß\\'")}
+            };
 
-            Console.WriteLine(reply.Message);
+            var client = new Greeter.GreeterClient(channel);
+            var reply = await client.SayHelloAsync(new HelloRequest {Name = "not me"}, metadata);
+
+            Console.WriteLine($"{reply.Message} (actual user is {reply.CtxUser})");
         }
     }
 }
