@@ -1,4 +1,4 @@
-package io.github.mabako.playground.grpcserver;
+package io.github.mabako.playground.grpcserver.service;
 
 import io.github.mabako.playground.grpcserver.interceptor.Constants;
 import io.github.mabako.playground.grpcserver.interceptor.PasswordlessInterceptor;
