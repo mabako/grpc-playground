@@ -1,0 +1,5 @@
+grpc:
+  port: 5001
+  security:
+    private-key: classpath:ssl/MyKey.key
+    cert-chain: classpath:ssl/MyCertificate.crt
